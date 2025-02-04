@@ -3,8 +3,12 @@ import { Activity } from "../../models/activity";
 
 interface ActivityListProps {
   activities: Activity[];
+  selectActivity: (id: string) => void;
 }
-export default function ActivityList({ activities }: ActivityListProps) {
+export default function ActivityList({
+  activities,
+  selectActivity,
+}: ActivityListProps) {
   return (
     <Segment>
       <Item.Group divided>
@@ -20,7 +24,12 @@ export default function ActivityList({ activities }: ActivityListProps) {
                 </div>
               </Item.Description>
               <Item.Extra>
-                <Button floated="right" content="view" color="blue" />
+                <Button
+                  onClick={() => selectActivity(activity.id)}
+                  floated="right"
+                  content="View"
+                  color="blue"
+                />
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>

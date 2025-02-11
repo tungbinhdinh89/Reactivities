@@ -74,8 +74,13 @@ function App() {
   }
 
   function handleDeleteActivity(id: string) {
-    setActivities([...activities.filter((x) => x.id !== id)]);
+    setSubmitting(true);
+    agent.Activites.delete(id).then(() => {
+      setActivities([...activities.filter((x) => x.id !== id)]);
+      setSubmitting(false);
+    });
   }
+
   if (loading) return <LoadingComponent content="Loading app" />;
   return (
     <>
@@ -91,7 +96,7 @@ function App() {
           closeForm={handleFormClose}
           createOrUpdate={handleCreateOrUpdateActivity}
           deleteActivity={handleDeleteActivity}
-          sumitting = {submitting}
+          submitting={submitting}
         />
       </Container>
     </>

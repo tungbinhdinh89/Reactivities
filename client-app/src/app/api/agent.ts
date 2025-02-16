@@ -8,6 +8,8 @@ const sleep = (delay: number) => {
   });
 };
 
+// comments
+
 axios.defaults.baseURL = "http://localhost:5087/api";
 
 //  Interceptors trong Axios cho phép bạn can thiệp vào quá trình xử lý request và response trước khi chúng được trả về hoặc gửi đi.
@@ -34,10 +36,10 @@ const request = {
 const Activites = {
   list: () => request.get<Activity[]>("/activities"),
   details: (id: string) => request.get<Activity>(`/activities/${id}`),
-  create: (activity: Activity) => axios.post<void>('/activities', activity),
-  update: (activity: Activity) => axios.put<void>(`/activities/${activity.id}`, activity),
-  delete: (id: string) => axios.delete<void>(`/activities/${id}`)
-
+  create: (activity: Activity) => axios.post<void>("/activities", activity),
+  update: (activity: Activity) =>
+    axios.put<void>(`/activities/${activity.id}`, activity),
+  delete: (id: string) => axios.delete<void>(`/activities/${id}`),
 };
 const agent = { Activites };
 

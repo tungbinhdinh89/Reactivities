@@ -1,6 +1,6 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Activity } from "../../models/activity";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 interface ActivityListProps {
   activities: Activity[];

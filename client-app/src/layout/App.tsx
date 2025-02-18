@@ -7,9 +7,12 @@ import ActivityDashboard from "../features/activities/dashboard/ActivityDashboar
 import { v4 as uuid } from "uuid";
 import agent from "../app/api/agent";
 import LoadingComponent from "./LoadingComponent";
-import axios from "axios";
+import { useStore } from "../app/stores/stores";
+import { observer } from "mobx-react-lite";
 
 function App() {
+  const { activityStore } = useStore();
+
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<
     Activity | undefined
@@ -103,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);

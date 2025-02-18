@@ -8,8 +8,6 @@ const sleep = (delay: number) => {
   });
 };
 
-// comments
-
 axios.defaults.baseURL = "http://localhost:5087/api";
 
 //  Interceptors trong Axios cho phép bạn can thiệp vào quá trình xử lý request và response trước khi chúng được trả về hoặc gửi đi.

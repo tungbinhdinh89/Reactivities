@@ -1,16 +1,30 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Activity } from "../../models/activity";
+import { SyntheticEvent, useState } from "react";
 
 interface ActivityListProps {
   activities: Activity[];
   selectActivity: (id: string) => void;
   deleteActivity: (id: string) => void;
+  submitting: boolean;
 }
 export default function ActivityList({
   activities,
   selectActivity,
   deleteActivity,
+  submitting,
 }: ActivityListProps) {
+  const [target, setTarget] = useState<string>("");
+
+  // SyntheticEvent là sự kiện tổng hợp của React, giúp tối ưu hiệu suất và quản lý bộ nhớ tốt hơn.
+  function handleDeleteActivity(
+    e: SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) {
+    setTarget(e.currentTarget.name);
+    deleteActivity(id);
+  }
+
   return (
     <Segment>
       <Item.Group divided>
@@ -33,7 +47,9 @@ export default function ActivityList({
                   color="blue"
                 />
                 <Button
-                  onClick={() => deleteActivity(activity.id)}
+                  name={activity.id}
+                  loading={submitting && target == activity.id}
+                  onClick={(e) => handleDeleteActivity(e, activity.id)}
                   floated="right"
                   content="Delete"
                   color="red"

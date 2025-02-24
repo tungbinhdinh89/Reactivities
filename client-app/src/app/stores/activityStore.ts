@@ -7,8 +7,8 @@ export default class ActivityStore {
   activityRegistry = new Map<string, Activity>();
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
-  loading = true;
-  loadingInitial = false;
+  loading = false;
+  loadingInitial = true;
 
   constructor() {
     makeAutoObservable(this);

@@ -2,12 +2,12 @@ import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../app/stores/stores";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 export default observer(function ActivityList() {
   const [target, setTarget] = useState<string>("");
   const { activityStore } = useStore();
-  const { selectActivity, deleteActivity, loading, activitiesByDate } =
-    activityStore;
+  const { loading, activitiesByDate } = activityStore;
 
   // SyntheticEvent là sự kiện tổng hợp của React, giúp tối ưu hiệu suất và quản lý bộ nhớ tốt hơn.
   function handleDeleteActivity(
@@ -15,7 +15,7 @@ export default observer(function ActivityList() {
     id: string
   ) {
     setTarget(e.currentTarget.name);
-    deleteActivity(id);
+    // deleteActivity(id);
   }
 
   return (
@@ -34,7 +34,8 @@ export default observer(function ActivityList() {
               </Item.Description>
               <Item.Extra>
                 <Button
-                  onClick={() => selectActivity(activity.id)}
+                  as={Link}
+                  to={`/activities/${activity.id}`}
                   floated="right"
                   content="View"
                   color="blue"

@@ -1,20 +1,27 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
-import { Activity } from "../../models/activity";
+import { SyntheticEvent, useState } from "react";
+import { useStore } from "../../app/stores/stores";
+import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
-interface ActivityListProps {
-  activities: Activity[];
-  selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
-}
-export default function ActivityList({
-  activities,
-  selectActivity,
-  deleteActivity,
-}: ActivityListProps) {
+export default observer(function ActivityList() {
+  const [target, setTarget] = useState<string>("");
+  const { activityStore } = useStore();
+  const { loading, activitiesByDate } = activityStore;
+
+  // SyntheticEvent là sự kiện tổng hợp của React, giúp tối ưu hiệu suất và quản lý bộ nhớ tốt hơn.
+  function handleDeleteActivity(
+    e: SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) {
+    setTarget(e.currentTarget.name);
+    // deleteActivity(id);
+  }
+
   return (
     <Segment>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>
@@ -27,13 +34,16 @@ export default function ActivityList({
               </Item.Description>
               <Item.Extra>
                 <Button
-                  onClick={() => selectActivity(activity.id)}
+                  as={Link}
+                  to={`/activities/${activity.id}`}
                   floated="right"
                   content="View"
                   color="blue"
                 />
                 <Button
-                  onClick={() => deleteActivity(activity.id)}
+                  name={activity.id}
+                  loading={loading && target == activity.id}
+                  onClick={(e) => handleDeleteActivity(e, activity.id)}
                   floated="right"
                   content="Delete"
                   color="red"
@@ -46,4 +56,4 @@ export default function ActivityList({
       </Item.Group>
     </Segment>
   );
-}
+});
